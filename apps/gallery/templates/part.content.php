@@ -134,6 +134,15 @@ style(
 		</div>
 	</span>   
 </div>
+<div id="face_display" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="frame"></div>
+<div id="bottom_container"  class="bottom_bar"> 
+     <input id="face_files"  type="button" value="文件"  class="button_style"  />
+     <input id="face_status"  type="button" value="动态"  class="button_style"  />
+     <input id="face_gallery"  type="button" value="相册"  calss="button_style"  />
+     <input id="face_app"  type="button" value="应用"  class="button_style"  />
+</div>
+
+<!--
 <div id="search_container" class="search_bar">
         <input id="face-input"  type="search"  placeholder="Search" /> 
         <input id="face-button"  type="button" name="s"  />
@@ -141,7 +150,8 @@ style(
 <div id="face_display" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="frame"></div>
 
 <div id="footer">
-</div>    
+</div>
+-->    
 <div id="gallery" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="hascontrols"></div>    
 <div id="emptycontent" class="hidden"></div>         
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>

@@ -81,7 +81,7 @@ div.crumb.last a {
 	position: relative;
 	overflow: hidden;
 	text-align: justify;
-	top: 0;
+	top: 45px;
 	padding-bottom: 10px;
 	margin-bottom: 45px;
 	margin-top: 0;
@@ -370,14 +370,14 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: auto;
+    width: inherit;
     display:inline-block !important; 
     *display:inline;
     *zoom:1;
     margin: 0 auto;
-    border: 1px solid rgba(230, 94, 11, 0.79); 
+    border: 0px solid rgba(230, 94, 11, 0.79); 
     border-radius: 15px;
-    top: 90px;
+    top: 60px;
     padding-bottom: 0px;
     margin-bottom: 92px;
     margin-top: 5px;
@@ -420,4 +420,114 @@ http://www.bypeople.com/author/comatosed/*/
     clear:both;
     text-align:center;
     padding:5px;          
+}
+.Photo_frame{
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 180px;
+    height:210px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 1px solid rgba(230, 94, 11, 0.79); 
+    border-radius: 15px;
+    top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 6px;
+    margin-top: 6px;
+    margin-left: 6px;
+    margin-right: 6px;
+}
+.Photo_text_style {
+    margin-top :0px;
+    margin-bottom: 0px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    color: #100101;
+    font-size: 13px;
+    line-height: normal;
+    width: auto;
+    overflow-x: hidden;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+}
+.Photo_frame_child{
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    width: 180px;
+    height:180px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 1px solid rgba(230, 94, 11, 0.79); 
+    border-radius: 15px;
+    top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 0px;
+    margin-left: 0px;
+    margin-right: 0px;
+}
+#bottom_container.bottom_bar {
+    position: fixed;
+    overflow: hidden;
+    width:100%;
+    background: rgba(234, 230, 222, 0.97);
+    text-align: left;
+    margin-left: 0px;
+    bottom: 0px;
+    padding-bottom: 0px;
+    z-index: 50;
+}
+#face_files{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        vertical-align:middle;
+        text-align: center;
+        width: 60px;
+        height:33px;
+        margin-left: 0px;
+        border:none;
+}
+#face_app{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        vertical-align:middle;
+        text-align: center;
+        width: 60px;
+        height:33px;
+        margin-left: 0px;
+        border:none;
+}
+#face_status{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        vertical-align:middle;
+        text-align: center;
+        width: 60px;
+        height:33px;
+        margin-left: 0px;
+        border:none;
+}
+#face_gallery{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        vertical-align:middle;
+        text-align: center;
+        width: 60px;
+        height:33px;
+        margin-left: 0px;
+        border:none;
+}
+
+.peoplephotos {
+    border-radius:15px;
+    width: 90px;
+    height:90px;
+    border:2.5px solid rgba(255, 255, 255, .9);
 }

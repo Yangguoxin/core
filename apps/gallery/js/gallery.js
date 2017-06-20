@@ -329,26 +329,122 @@
             
         },
         
-        set_mouseover: function(){
+        //set_mouseover: function(){
             /*set tag when mouse foucsed on image*/
-            $(this).children("p").remove();
-            var personID = $(this).attr("id");
-            var name_tag = document.createElement("p");
-                    name_tag.innerHTML = $(this).attr("name");
-                    name_tag.className = "text_style";
-                    name_tag.setAttribute("style","display: block");
-                    document.getElementById(personID).appendChild(name_tag);    
-        },
-        
+        //    $(this).children("p").remove();
+        //    var personID = $(this).attr("id");
+        //    var name_tag = document.createElement("p");
+        //            name_tag.innerHTML = $(this).attr("name");
+        //            name_tag.className = "text_style";
+        //            name_tag.setAttribute("style","display: block");
+        //            document.getElementById(personID).appendChild(name_tag);    
+        //},
+        /*
         set_mouseleave: function(){
             $(this).children("p").remove();
         },
-        
+        */
         Enter_key_up : function(){
             var e = window.event || arguments.callee.caller.arguments[0];
             if (e && e.keyCode == 13 ) {
              Gallery.getSearch();
          }
+        },
+        
+        gallery_clean: function(){
+            Gallery.files_id = [];
+            Gallery.faceflag = true;
+            //Gallery.view.viewAlbum(Gallery.GlobalPath);
+        },        
+        
+        gallery_load_frame : function(){
+            /*array_frame is ["id","class","id","class","str","class"]*/
+            var frame_array = [ ["all_photos","Photo_frame","all_photos_child","Photo_frame_child","所有照片","Photo_text_style"],
+                                ["people_photos","Photo_frame","people_photos_child","Photo_frame_child","人物","Photo_text_style"],
+                                ["place_photos","Photo_frame","place_photos_child","Photo_frame_child","地点","Photo_text_style"],
+                                ["collection_photos","Photo_frame","collection_photos_child","Photo_frame_child","收藏","Photo_text_style"],
+            ];
+            for(i=0;i<frame_array.length;i++)
+            {
+                var All_Photo_frame    = document.createElement("div");
+                var All_Photo_frame_child    = document.createElement("div");
+                var All_name_tag       = document.createElement("p");
+                All_Photo_frame.setAttribute("id",frame_array[i][0]);
+                All_Photo_frame.setAttribute("class",frame_array[i][1]);
+                All_Photo_frame_child.setAttribute("id",frame_array[i][2]);
+                All_Photo_frame_child.setAttribute("class",frame_array[i][3]);                
+                All_name_tag.innerHTML = frame_array[i][4];
+                All_name_tag.className = frame_array[i][5];    
+                var myDiv = document.getElementById('face_display'); 
+                myDiv.appendChild(All_Photo_frame);
+                All_Photo_frame.appendChild(All_Photo_frame_child);
+                All_Photo_frame.appendChild(All_name_tag);
+            }
+                                  
+        },
+        
+        gallery_load_Allphotos: function(){
+
+            
+        },
+        
+        gallery_load_peoplephotos: function(){
+            
+            var baseUrl = OC.generateUrl('apps/gallery/files/suggest/');                       
+            var search_url = baseUrl + "**1**" + '?' + "search=" + "**1**";
+            $.ajax ({
+                type: 'GET',
+                url: search_url,
+                dataType : 'json',
+                beforeSend:function(){    
+                }, 
+                success : function(data){
+                    var data_list = data;
+                    var files_list = new Array();
+                    var files_length = data_list.length;
+                    if(files_length === 0)
+                        return false;
+                    if(files_length <= 4)
+                        files_list = data;
+                    else{
+                        for(var i=0;i < 4;i++)
+                            files_list[i] = data[files_length - i -1];
+                    } 
+                    Gallery.get_peoplephotos_imge(files_list);
+                    alert(files_list); 
+                },
+                error : function(data) {
+                    
+                    alert("请输入需要查询的id");
+                             
+                }
+                
+            });        
+            },
+        
+        get_peoplephotos_imge: function(list){
+
+            var face_list = list;
+            var i ;
+            if(face_list.length <= 0)
+                return false;
+            var params = {
+                face_list: face_list.join(';')
+            };
+            var url =Gallery.utility.buildGalleryUrl('faceThumbnails', '', params);
+            var eventSource = new Gallery.EventSource(url);
+                eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
+                /*Create a Label 'div' to incase 'input image' as face*/   
+                    
+            var bigImg = document.createElement("input");
+            bigImg.setAttribute("type","image"); 
+            bigImg.setAttribute("class","peoplephotos");   
+            bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview); 
+            var myDiv = document.getElementById('people_photos_child'); 
+            myDiv.appendChild(bigImg);
+                                   
+                });
+            
         },
         
 		/**
