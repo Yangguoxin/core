@@ -446,6 +446,96 @@
                 });
             
         },
+
+        gallery_add_facephotos: function(){
+
+            $('#face_display>div').remove();
+            /*Create button in face_display*/
+            var All_name_tag       = document.createElement("p");
+            var All_photo_container= document.createElement("div");
+            var All_photo_button   = document.createElement("input");
+            All_photo_container.setAttribute("id","back_container");
+            All_photo_button.setAttribute("value","返回");
+            All_photo_button.className = "button_back";
+            All_photo_button.setAttribute("id","button_back");
+            All_photo_button.setAttribute("type","image");
+            All_name_tag.innerHTML = "人物";
+            All_name_tag.className = "person_title";
+            var myDiv = document.getElementById('face_display'); 
+                myDiv.appendChild(All_name_tag);
+                myDiv.appendChild(All_photo_container);
+                All_photo_container.appendChild(All_photo_button);
+            var baseUrl = OC.generateUrl('apps/gallery/files/suggest/');                       
+            var search_url = baseUrl + "**1**" + '?' + "search=" + "**1**";
+            $.ajax ({
+                type: 'GET',
+                url: search_url,
+                dataType : 'json',
+                beforeSend:function(){    
+                }, 
+                success : function(data){
+                    var data_list = data;
+                    var files_list = new Array();
+                    var files_length = data_list.length;
+                    if(files_length === 0)
+                        return false;
+                    if(files_length <= 4)
+                        files_list = data;
+                    else{
+                        for(var i=0;i < 4;i++)
+                            files_list[i] = data[files_length - i -1];
+                    } 
+                    Gallery.load_add_face_imge(files_list);
+                    //alert(files_list); 
+                },
+                error : function(data) {
+                    
+                    alert("请输入需要查询的id");
+                             
+                }
+                
+            });
+            /*Add face_image into div*/
+            var Add_face_photos = document.createElement("div");
+            var Add_face_button = document.createElement("input");
+            Add_face_photos.setAttribute("class","add_face_photos");
+            Add_face_button.setAttribute("id","add_face_button");
+            Add_face_button.setAttribute("type","image");
+            Add_face_button.setAttribute("src","/owncloud/apps/gallery/img/actions/add_face_image.jpg");
+            var gallery_image_Div = document.getElementById('gallery_image');
+                gallery_image_Div.appendChild(Add_face_photos);
+                Add_face_photos.appendChild(Add_face_button);
+        },
+        
+        load_add_face_imge: function(list){
+
+            var face_list = list;
+            var i ;
+            if(face_list.length <= 0)
+                return false;
+            var params = {
+                face_list: face_list.join(';')
+            };
+            var url =Gallery.utility.buildGalleryUrl('faceThumbnails', '', params);
+            var eventSource = new Gallery.EventSource(url);
+                eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
+                /*Create a Label 'div' to incase 'input image' as face*/   
+                    
+                    var block_image = document.createElement("div");
+                    var bigImg = document.createElement("input");
+                      block_image.className = "add_face_photos";
+                      bigImg.setAttribute("type","image"); 
+                      bigImg.setAttribute("class","add_load_face");   
+                      bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview);
+                      block_image.setAttribute("id",preview.filesname); 
+                      block_image.setAttribute("name",preview.name);
+                    var myDiv = document.getElementById('gallery_image'); 
+                      myDiv.appendChild(block_image);                      
+                      block_image.appendChild(bigImg);
+                                   
+                });
+            
+        },
         
 		/**
 		 * Switches to the Files view

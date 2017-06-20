@@ -135,6 +135,7 @@ style(
 	</span>   
 </div>
 <div id="face_display" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="frame"></div>
+<div id="gallery_image" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="gallery_image_frame"></div>
 <div id="bottom_container"  class="bottom_bar"> 
      <input id="face_files"  type="button" value="文件"  class="button_style"  />
      <input id="face_status"  type="button" value="动态"  class="button_style"  />

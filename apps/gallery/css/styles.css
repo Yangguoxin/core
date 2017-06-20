@@ -377,9 +377,9 @@ http://www.bypeople.com/author/comatosed/*/
     margin: 0 auto;
     border: 0px solid rgba(230, 94, 11, 0.79); 
     border-radius: 15px;
-    top: 60px;
+    top: 45px;
     padding-bottom: 0px;
-    margin-bottom: 92px;
+    margin-bottom: 0px;
     margin-top: 5px;
 }
 .face {
@@ -531,3 +531,73 @@ http://www.bypeople.com/author/comatosed/*/
     height:87px;
     border:2.5px solid rgba(255, 255, 255, .9);
 }
+#back_container{
+    position: fixed;
+    overflow: hidden;
+    width:auto;
+    background: rgb(255, 255, 255);
+    text-align: left;
+    margin-left: 0px;
+    top: 95px;
+    padding-bottom: 0px;
+    z-index: 50;
+}
+#button_back{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        vertical-align:middle;
+        text-align: center;
+        width: 60px;
+        height:25px;
+        margin-left: 0px;
+        border:none;
+}
+#gallery_image.gallery_image_frame {
+    position: relative;
+    overflow: hidden;
+    text-align: left;
+    width: inherit;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 0px solid rgba(230, 94, 11, 0.79); 
+    border-radius: 15px;
+    top: 60px;
+    padding-bottom: 0px;
+    margin-bottom: 0px;
+    margin-top: 5px;
+}
+.add_face_photos{
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 90px;
+    height:90px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 0px solid rgba(230, 94, 11, 0.79); 
+    border-radius: 15px;
+    top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 16px;
+    margin-right: 10px;
+}
+
+#add_face_button{
+        color: #fff;
+        width: 90px;
+        height:90px;
+        border:none;
+}
+.add_load_face{
+        color: #fff;
+        width: 90px;
+        height:90px;
+        border:none; 
+}
+

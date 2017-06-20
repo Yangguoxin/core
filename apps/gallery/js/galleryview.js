@@ -51,6 +51,7 @@
 			if ($.isEmptyObject(Gallery.imageMap)) {
 				Gallery.view.showEmptyFolder(albumPath, errorMessage);
 			} else {
+                $('#face_display>div').remove();
 				this.viewAlbum(albumPath);
                 //Gallery.getSearch();
                 Gallery.gallery_clean();
@@ -327,7 +328,8 @@
 			$('#sort-date-button').click(Gallery.sorter);
             $('#face-input').keyup(Gallery.Enter_key_up);
             $('#face-button').click(Gallery.getSearch);
-            $('#face_display ').on('click','div',Gallery.get_result);
+            //$('#face_display ').on('click','div',Gallery.get_result);
+            $('#face_display ').on('click','#people_photos',Gallery.gallery_add_facephotos);
             //$('#face_display ').on('mouseover','div',Gallery.set_mouseover);
            // $('#face_display ').on('mouseleave','div',Gallery.set_mouseleave); 
             $('#face_display ').on('click',':button',Gallery.set_personID);            
