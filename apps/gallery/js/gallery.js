@@ -411,7 +411,7 @@
                             files_list[i] = data[files_length - i -1];
                     } 
                     Gallery.get_peoplephotos_imge(files_list);
-                    alert(files_list); 
+                    //alert(files_list); 
                 },
                 error : function(data) {
                     
