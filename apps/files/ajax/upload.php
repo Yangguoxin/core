@@ -284,7 +284,8 @@ if (\OC\Files\Filesystem::isValidPath($dir) === true) {
                                         $person_json_result['name'], 
                                         $person_json_result['personId'],
                                         $data['id'], 
-                                        1);                    
+                                        1);
+                    add_faceimage_2json($PersonName);                    
                 }
                 else {
                     //can't find the person, create a person id with "??"+"random number"
@@ -303,7 +304,8 @@ if (\OC\Files\Filesystem::isValidPath($dir) === true) {
                                         $face_json_result['faces'][$ii]['top'],
                                         $face_json_result['faces'][$ii]['bottom']);
                     //create new personid.person.json
-                    api_add_person_file($face_filename, $person_rand, $personId, $data['id'], 0);                                        
+                    api_add_person_file($face_filename, $person_rand, $personId, $data['id'], 0);
+                    add_faceimage_2json($PersonName);                                        
                 }     
             }
             

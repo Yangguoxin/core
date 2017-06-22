@@ -555,3 +555,40 @@ function api_add_person_file ($path, $name, $personId, $fileId, $mode) {
     return true;
     
 }
+
+function add_faceimage_2json($filename) {
+    $filename = $filename.'.'."face".'.'."png";
+    $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+    $person_file = $loacl_file_dir."/"."remaining_face.json";
+    $json = file_get_contents($person_file);        
+            //create new file
+            if(!$json) {
+                    $fp = fopen($person_file, "w+");
+                    if (!is_writable($person_file)) {
+                            return false;
+                    }
+            
+                    $data = array($filename);
+                    $data = json_encode($data);
+                    fwrite($fp, $data); 
+                    fclose($fp);
+                    return true; 
+            }
+               
+            $json = json_decode($json, true);                           
+            //the file is already here.
+            $number = count($json);
+            for($ii = 0 ; $ii < $number; $ii++) {
+                if($filename === $json[$ii])
+                    return true;
+            }
+            
+            //$tmp =  ($json['files']);
+            array_push($json, $filename);
+            //array_push($json['files'], $path);  
+            $json = json_encode($json);
+            file_put_contents($person_file, $json);
+                
+            return true;
+}
+
