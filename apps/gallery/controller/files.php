@@ -233,4 +233,80 @@ trait Files {
         return $files = tagPerson($loacl_file_dir, $oldName, $newName,$personID);
         
     }
+    
+        /**
+     * Returns a list of all face thumbnails choosed by user
+     *
+     * @param no 
+     *
+     * @return array|false
+     */   
+    private function getChoosePhotos($filesname) {
+        $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+        $person_file = $loacl_file_dir."/".$filesname.".json";
+        $json = file_get_contents($person_file);
+        if(!$json) {
+                    $fp = fopen($person_file, "w+");
+                    if (!is_writable($person_file)) {
+                            return false;
+                    }
+                    
+                    $data = array();
+                    $data = json_encode($data);
+                    fwrite($fp, $data); 
+                    fclose($fp); 
+            }
+        //header('Content-type:text/json');
+        $json = json_decode($json, true);
+        $filesA = array();         
+        $filesA = $json;
+        $filesA=json_encode($filesA);
+        return $filesA; 
+              //return key image and untagged image
+    }
+
+        /**
+     * Pick face image from "remaining_face" to "choosed_face"
+     *
+     * @param no 
+     *
+     * @return array|false
+     */   
+    private function Pickface($face_list) {
+        $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+        $choosed = $loacl_file_dir."/"."Choosed_face.json";
+        $remaining = $loacl_file_dir."/"."remaining_face.json";
+        $json_choosed = file_get_contents($choosed);
+        $json_remaining = file_get_contents($remaining);
+        $json_choosed = json_decode($json_choosed, true);
+        $json_remaining = json_decode($json_remaining, true);
+       
+        $idsArray = explode(';', $face_list); 
+        foreach ($idsArray as $file) {
+            
+             $key = array_search($file, $json_remaining);
+             if ($key === false)
+                return false;
+             array_splice($json_remaining, $key, 1);
+             /*the file is already here.*/
+             $number = count($json_choosed);
+             for($ii = 0 ; $ii < $number; $ii++) {
+                if($file === $json_choosed[$ii]){
+                    $json_remaining = json_encode($json_remaining);
+                    file_put_contents($remaining, $json_remaining);
+                    return false;
+                    }
+                }
+             array_push($json_choosed, $file);
+
+                
+        }
+             $json_choosed = json_encode($json_choosed);
+             file_put_contents($choosed, $json_choosed);
+             $json_remaining = json_encode($json_remaining);
+             file_put_contents($remaining, $json_remaining);
+             return true; 
+              //return key image and untagged image
+    }
+    
 }

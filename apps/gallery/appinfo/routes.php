@@ -83,6 +83,18 @@ return [
             'url'  => '/files/suggest/{key}',
             'verb' => 'GET'            
         ],
+        // The list of thumbnails of persons' face which has been choosed by user
+        [
+            'name' => 'files#get_photos_choosed',
+            'url'  => '/files/photos_choosed',
+            'verb' => 'GET'            
+        ],
+        // Pick face image from "remaining_face" to "choosed_face"
+        [
+            'name' => 'files#do_photos_pick',
+            'url'  => '/files/photos_pick',
+            'verb' => 'GET'            
+        ],        
         // The list of one person's image which previews can be generated        
         [
             'name' => 'files#person_list',

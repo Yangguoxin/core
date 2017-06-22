@@ -154,6 +154,25 @@ class FilesController extends Controller {
             return $this->jsonError($exception, $this->request, $this->logger);
         }    
     }
+    /*Get files list which have been choosed by user*/
+    public function getPhotosChoosed($filesname) {
+        try {
+            echo $this->getChoosePhotos($filesname);
+            exit;
+        } catch (\Exception $exception) {
+            return $this->jsonError($exception, $this->request, $this->logger);
+        }    
+    }
+    
+    /*Pick face image from "remaining_face" to "choosed_face"*/
+    public function doPhotosPick($face_list) {
+        try {
+             return($this->Pickface($face_list));
+            
+        } catch (\Exception $exception) {
+            return $this->jsonError($exception, $this->request, $this->logger);
+        }    
+    }
     
         /**
      * @NoAdminRequired

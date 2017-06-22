@@ -399,6 +399,8 @@
                 beforeSend:function(){    
                 }, 
                 success : function(data){
+                    if (data === "")
+                    return false;
                     var data_list = data;
                     var files_list = new Array();
                     var files_length = data_list.length;
@@ -450,23 +452,24 @@
         gallery_add_facephotos: function(){
 
             $('#face_display>div').remove();
+            $('#gallery_image>div').remove();
             /*Create button in face_display*/
             var All_name_tag       = document.createElement("p");
             var All_photo_container= document.createElement("div");
             var All_photo_button   = document.createElement("input");
-            All_photo_container.setAttribute("id","back_container");
+            All_photo_container.setAttribute("id","back_menu_container");
             All_photo_button.setAttribute("value","返回");
-            All_photo_button.className = "button_back";
-            All_photo_button.setAttribute("id","button_back");
-            All_photo_button.setAttribute("type","image");
+            All_photo_button.className = "button_back_menu";
+            All_photo_button.setAttribute("id","button_back_menu");
+            All_photo_button.setAttribute("type","button");
             All_name_tag.innerHTML = "人物";
             All_name_tag.className = "person_title";
             var myDiv = document.getElementById('face_display'); 
                 myDiv.appendChild(All_name_tag);
                 myDiv.appendChild(All_photo_container);
                 All_photo_container.appendChild(All_photo_button);
-            var baseUrl = OC.generateUrl('apps/gallery/files/suggest/');                       
-            var search_url = baseUrl + "**1**" + '?' + "search=" + "**1**";
+            var baseUrl = OC.generateUrl('apps/gallery/files/photos_choosed');                       
+            var search_url = baseUrl + '?' + "filesname=" + "Choosed_face";
             $.ajax ({
                 type: 'GET',
                 url: search_url,
@@ -474,18 +477,9 @@
                 beforeSend:function(){    
                 }, 
                 success : function(data){
-                    var data_list = data;
-                    var files_list = new Array();
-                    var files_length = data_list.length;
-                    if(files_length === 0)
-                        return false;
-                    if(files_length <= 4)
-                        files_list = data;
-                    else{
-                        for(var i=0;i < 4;i++)
-                            files_list[i] = data[files_length - i -1];
-                    } 
-                    Gallery.load_add_face_imge(files_list);
+                    if (data === null)
+                    return false; 
+                    Gallery.load_add_face_imge(data);
                     //alert(files_list); 
                 },
                 error : function(data) {
@@ -498,15 +492,26 @@
             /*Add face_image into div*/
             var Add_face_photos = document.createElement("div");
             var Add_face_button = document.createElement("input");
-            Add_face_photos.setAttribute("class","add_face_photos");
+            Add_face_photos.setAttribute("class","add_face_photos_add");
             Add_face_button.setAttribute("id","add_face_button");
             Add_face_button.setAttribute("type","image");
             Add_face_button.setAttribute("src","/owncloud/apps/gallery/img/actions/add_face_image.jpg");
             var gallery_image_Div = document.getElementById('gallery_image');
-                gallery_image_Div.appendChild(Add_face_photos);
-                Add_face_photos.appendChild(Add_face_button);
+            gallery_image_Div.appendChild(Add_face_photos);
+            Add_face_photos.appendChild(Add_face_button);
+        },
+                            
+        gallery_change_class: function(){
+             var gallery_image_Div = document.getElementById($(this).attr("id"));
+             gallery_image_Div.setAttribute("class","add_face_photos_choose");
         },
         
+        gallery_change_class_back: function(){
+             var gallery_image_Div = document.getElementById($(this).attr("id"));
+             gallery_image_Div.setAttribute("class","add_face_photos");
+        },
+        
+        /*Loading face image at adding page*/        
         load_add_face_imge: function(list){
 
             var face_list = list;
@@ -518,7 +523,90 @@
             };
             var url =Gallery.utility.buildGalleryUrl('faceThumbnails', '', params);
             var eventSource = new Gallery.EventSource(url);
-                eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
+                 eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
+                /*Create a Label 'div' to incase 'input image' as face*/   
+                    
+                    var block_image = document.createElement("div");
+                    var bigImg = document.createElement("input");
+                      block_image.className = "add_face_photos_display";
+                      bigImg.setAttribute("type","image"); 
+                      bigImg.setAttribute("class","add_load_face");   
+                      bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview);
+                      block_image.setAttribute("id",preview.filesname); 
+                      block_image.setAttribute("name",preview.name);
+                    var myDiv = document.getElementById('gallery_image'); 
+                      myDiv.appendChild(block_image);                      
+                      block_image.appendChild(bigImg);
+                                   
+                });
+
+            
+        },
+        
+        /* Choose face image */
+        gallery_choose_facephotos: function(){
+
+            $('#face_display>div').remove();
+            $('#face_display>p').remove();
+            $('#gallery_image>div').remove();
+            /*Create back_button and ok_button in face_display*/
+            var back_add_container  = document.createElement("div");
+            var ok_add_container    = document.createElement("div");
+            var back_add_button     = document.createElement("input");
+            var ok_add_button       = document.createElement("input");
+            
+            back_add_container.setAttribute("id","back_add_container");
+            back_add_button.setAttribute("value","返回");
+            back_add_button.className = "button_back_add";
+            back_add_button.setAttribute("id","button_back_add");
+            back_add_button.setAttribute("type","button");
+            
+            ok_add_container.setAttribute("id","ok_add_container");
+            ok_add_button.setAttribute("value","确认");
+            ok_add_button.className = "button_ok_add";
+            ok_add_button.setAttribute("id","button_ok_add");
+            ok_add_button.setAttribute("type","button");            
+            var myDiv = document.getElementById('face_display'); 
+                myDiv.appendChild(back_add_container);
+                myDiv.appendChild(ok_add_container);
+                back_add_container.appendChild(back_add_button);
+                ok_add_container.appendChild(ok_add_button);
+            var baseUrl = OC.generateUrl('apps/gallery/files/photos_choosed');                       
+            var search_url = baseUrl + '?' + "filesname=" + "remaining_face";
+            $.ajax ({
+                type: 'GET',
+                url: search_url,
+                dataType : 'json',
+                beforeSend:function(){    
+                }, 
+                success : function(data){
+                    var data_list = data;
+                    if(data === null)
+                        return false;
+                    Gallery.load_choose_face_imge(data_list);
+                    //alert(files_list); 
+                },
+                error : function(data) {
+                    
+                    alert("请输入需要查询的id");
+                             
+                }
+                
+            });                    
+        },
+        
+        load_choose_face_imge: function(list){
+
+            var face_list = list;
+            var i ;
+            if(face_list.length <= 0)
+                return false;
+            var params = {
+                face_list: face_list.join(';')
+            };
+            var url =Gallery.utility.buildGalleryUrl('faceThumbnails', '', params);
+            var eventSource = new Gallery.EventSource(url);
+                 eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
                 /*Create a Label 'div' to incase 'input image' as face*/   
                     
                     var block_image = document.createElement("div");
@@ -534,7 +622,41 @@
                       block_image.appendChild(bigImg);
                                    
                 });
+
             
+        },
+        
+        Pick_face_2choose: function(){
+                var face_list = new Array();
+                var i = 0;
+                $('div.add_face_photos_choose').each(function(){
+                    face_list[i] = ($(this).attr("id") + '.' + $(this).attr("name") + ".face.png");
+                    i++;
+                    });
+                if(face_list.length==0)
+                    return false;
+                var params = {
+                face_list: face_list.join(';')
+                    };
+                var url =Gallery.utility.buildGalleryUrl('files', '/photos_pick', params);
+                    $.ajax ({
+                        type: 'GET',
+                        url: url,
+                        dataType : 'json', 
+                        success : function(data){                      
+                                Gallery.gallery_add_facephotos();
+                                },
+                        error : function(data) {
+                                alert(data);         
+                                }
+                
+                    });
+                
+             
+        },
+        
+        gallery_back_2choose: function(){
+                Gallery.gallery_add_facephotos();
         },
         
 		/**

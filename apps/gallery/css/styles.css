@@ -531,18 +531,17 @@ http://www.bypeople.com/author/comatosed/*/
     height:87px;
     border:2.5px solid rgba(255, 255, 255, .9);
 }
-#back_container{
+#back_menu_container{
     position: fixed;
     overflow: hidden;
     width:auto;
-    background: rgb(255, 255, 255);
     text-align: left;
     margin-left: 0px;
-    top: 95px;
+    top: 92px;
     padding-bottom: 0px;
     z-index: 50;
 }
-#button_back{
+#button_back_menu{
         color: #fff;
         background: rgba(234, 84, 10, 0.9);
         vertical-align:middle;
@@ -568,26 +567,44 @@ http://www.bypeople.com/author/comatosed/*/
     margin-bottom: 0px;
     margin-top: 5px;
 }
-.add_face_photos{
+.add_face_photos_display{
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: 90px;
-    height:90px;
+    width: 91px;
+    height:91px;
     display:inline-block !important; 
     *display:inline;
     *zoom:1;
     margin: 0 auto;
-    border: 0px solid rgba(230, 94, 11, 0.79); 
+    border: 1px solid rgb(255, 255, 255); 
     border-radius: 15px;
     top: 0px;
     padding-bottom: 0px;
     margin-bottom: 5px;
     margin-top: 5px;
-    margin-left: 16px;
-    margin-right: 10px;
+    margin-left: 5px;
+    margin-right: 5px;
 }
-
+.add_face_photos_add{
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 91px;
+    height:91px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 1px solid rgb(255, 255, 255); 
+    border-radius: 15px;
+    top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
 #add_face_button{
         color: #fff;
         width: 90px;
@@ -600,4 +617,83 @@ http://www.bypeople.com/author/comatosed/*/
         height:90px;
         border:none; 
 }
-
+#back_add_container{
+    position: fixed;
+    overflow: hidden;
+    width:auto;
+    text-align: left;
+    margin-left: 0px;
+    top: 95px;
+    padding-bottom: 0px;
+    z-index: 50;
+}
+#ok_add_container{
+    position: fixed;
+    overflow: hidden;
+    width:auto;
+    text-align: left;
+    margin-left: 0px;
+    top: 95px;
+    right: 5px;
+    padding-bottom: 0px;
+    z-index: 50;
+}
+#button_back_add{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        text-align: center;
+        vertical-align:middle;
+        width: 60px;
+        height:25px;
+        margin-left: 0px;
+        border:none;
+}
+#button_ok_add{
+        color: #fff;
+        background: rgba(234, 84, 10, 0.9);
+        vertical-align:middle;
+        text-align: center;
+        vertical-align:middle;
+        width: 60px;
+        height:25px;
+        margin-left: 0px;
+        border:none;
+}
+.add_face_photos{
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 91px;
+    height:91px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 3px solid rgb(255, 255, 255); 
+    border-radius: 15px;
+    top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+.add_face_photos_choose{
+    position: relative;
+    overflow: hidden;
+    text-align: center;
+    width: 91px;
+    height:91px;
+    display:inline-block !important; 
+    *display:inline;
+    *zoom:1;
+    margin: 0 auto;
+    border: 3px solid rgb(234, 97, 31); 
+    border-radius: 15px;
+    top: 0px;
+    padding-bottom: 0px;
+    margin-bottom: 5px;
+    margin-top: 5px;
+    margin-left: 5px;
+    margin-right: 5px;
+}

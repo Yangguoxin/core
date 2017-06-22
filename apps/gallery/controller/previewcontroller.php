@@ -147,11 +147,17 @@ class PreviewController extends Controller {
             foreach ($idsArray as $file) {
             // Casting to integer here instead of using array_map to extract IDs from the URL
             list($thumbnail, $status) = $this->getFaceThumbnail($file);
-            $file_parts = explode('.',$file); 
+            $file_parts = explode('.',$file);
+            /* 
             $file_ext1 = strtolower(array_pop($file_parts));
             $file_ext2 = strtolower(array_pop($file_parts));
             $file_ext3 = strtolower(array_pop($file_parts));
             $file_ext4 = strtolower(array_pop($file_parts));
+            */
+            $file_ext1 = $file_parts[3];
+            $file_ext2 = $file_parts[2];
+            $file_ext3 = $file_parts[1];
+            $file_ext4 = $file_parts[0];
             $thumbnail['filesname'] = $file_ext4;
             $thumbnail['status'] = $status;
             $thumbnail['mimetype'] = "image/png";
