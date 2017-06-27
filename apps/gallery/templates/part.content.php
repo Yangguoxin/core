@@ -62,7 +62,11 @@ style(
 );
 ?>
 
-
+<div class="hiddenuploadfield">
+    <input type="file" id="file_upload_start" class="hiddenuploadfield" name="files[]"
+           data-url="<?php print_unescaped($_['uploadUrl']); ?>"/>
+          
+</div>
 <div id="controls">
 	<div id='breadcrumbs'></div>
 	<div class="left">
@@ -160,7 +164,6 @@ style(
 	   value="<?php p($_['mailNotificationEnabled']) ?>"/>  
 <input type="hidden" name="mailPublicNotificationEnabled" id="mailPublicNotificationEnabled"
 	   value="<?php p($_['mailPublicNotificationEnabled']) ?>"/>    
-<div class="hiddenuploadfield">
-	<input type="file" id="file_upload_start" class="hiddenuploadfield" name="files[]"
-		   data-url="<?php print_unescaped($_['uploadUrl']); ?>"/>
-</div>
+
+
+ 

@@ -78,10 +78,11 @@ div.crumb.last a {
 }
 
 #gallery.hascontrols {
+    display:none;
 	position: relative;
 	overflow: hidden;
 	text-align: justify;
-	top: 45px;
+	top: 90px;
 	padding-bottom: 10px;
 	margin-bottom: 45px;
 	margin-top: 0;
@@ -431,7 +432,7 @@ http://www.bypeople.com/author/comatosed/*/
     *display:inline;
     *zoom:1;
     margin: 0 auto;
-    border: 1px solid rgba(230, 94, 11, 0.79); 
+    border: 0px solid rgba(230, 94, 11, 0.79); 
     border-radius: 15px;
     top: 0px;
     padding-bottom: 0px;
@@ -623,7 +624,7 @@ http://www.bypeople.com/author/comatosed/*/
     width:auto;
     text-align: left;
     margin-left: 0px;
-    top: 95px;
+    top: 92px;
     padding-bottom: 0px;
     z-index: 50;
 }
@@ -633,7 +634,7 @@ http://www.bypeople.com/author/comatosed/*/
     width:auto;
     text-align: left;
     margin-left: 0px;
-    top: 95px;
+    top: 92px;
     right: 5px;
     padding-bottom: 0px;
     z-index: 50;

@@ -248,13 +248,29 @@
         },
         get_result: function(){
                     /*clear Label unless clicked one include 'p','span','input'*/
+                    $('div.add_face_photos_add').remove();
+                    $('#face_display>div').remove();
                     $(this).siblings().remove();
+                    $('#gallery_image').css('text-align','center');
+                    $('#gallery').css('display','block');
                     var personID = $(this).attr("id");
                     var name = $(this).attr("name");
+                    var back_add_container  = document.createElement("div");
+                    var back_add_button     = document.createElement("input");
+            
+                    back_add_container.setAttribute("id","back_add_container");
+                    back_add_button.setAttribute("value","返回");
+                    back_add_button.className = "button_back_add";
+                    back_add_button.setAttribute("id","button_back_add");
+                    back_add_button.setAttribute("type","button");            
+                    var display_myDiv = document.getElementById('face_display'); 
+                    display_myDiv.appendChild(back_add_container);
+                    back_add_container.appendChild(back_add_button);
+                    
                     /*creat Label 'p'*/
                     var prefile = document.createElement("p");
                         prefile.innerHTML = name;
-                        var myDiv = document.getElementById('face_display');
+                        var myDiv = document.getElementById('gallery_image');
                         myDiv.appendChild(prefile);
                     var static_name = document.createElement("span");
                         static_name.innerHTML = "NewName:  ";
@@ -296,9 +312,9 @@
         },
         
         set_personID: function(){
-            var newName = $("#face_display").children(":text").val();
-            var oldName = $("#face_display").children("div").attr("name");
-            var personID = $("#face_display").children("div").attr("id");
+            var newName = $("#gallery_image").children(":text").val();
+            var oldName = $("#gallery_image").children("div").attr("name");
+            var personID = $("#gallery_image").children("div").attr("id");
             if (newName === ""){
                        alert("请输入需要命名的名字，输入空错误");
                        return false;
@@ -317,7 +333,7 @@
                         success : function(data){
                                 var div_doc = document.getElementById(personID);
                                     div_doc.setAttribute("name",newName);
-                                    $('#face_display>p').html(newName);                      
+                                    $('#gallery_image>p').html(newName);                      
                                  
                                 },
                         error : function(data) {
@@ -354,7 +370,7 @@
         gallery_clean: function(){
             Gallery.files_id = [];
             Gallery.faceflag = true;
-            //Gallery.view.viewAlbum(Gallery.GlobalPath);
+            Gallery.view.viewAlbum(Gallery.GlobalPath);
         },        
         
         gallery_load_frame : function(){
@@ -399,7 +415,7 @@
                 beforeSend:function(){    
                 }, 
                 success : function(data){
-                    if (data === "")
+                    if (data === null)
                     return false;
                     var data_list = data;
                     var files_list = new Array();
@@ -453,6 +469,8 @@
 
             $('#face_display>div').remove();
             $('#gallery_image>div').remove();
+            $('#gallery_image').css('text-align','left');
+            Gallery.gallery_clean();
             /*Create button in face_display*/
             var All_name_tag       = document.createElement("p");
             var All_photo_container= document.createElement("div");
@@ -528,15 +546,15 @@
                     
                     var block_image = document.createElement("div");
                     var bigImg = document.createElement("input");
-                      block_image.className = "add_face_photos_display";
-                      bigImg.setAttribute("type","image"); 
-                      bigImg.setAttribute("class","add_load_face");   
-                      bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview);
-                      block_image.setAttribute("id",preview.filesname); 
-                      block_image.setAttribute("name",preview.name);
+                        block_image.className = "add_face_photos_display";
+                        bigImg.setAttribute("type","image"); 
+                        bigImg.setAttribute("class","add_load_face");   
+                        bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview);
+                        block_image.setAttribute("id",preview.filesname); 
+                        block_image.setAttribute("name",preview.name);
                     var myDiv = document.getElementById('gallery_image'); 
-                      myDiv.appendChild(block_image);                      
-                      block_image.appendChild(bigImg);
+                        myDiv.appendChild(block_image);                      
+                        block_image.appendChild(bigImg);
                                    
                 });
 
@@ -611,15 +629,15 @@
                     
                     var block_image = document.createElement("div");
                     var bigImg = document.createElement("input");
-                      block_image.className = "add_face_photos";
-                      bigImg.setAttribute("type","image"); 
-                      bigImg.setAttribute("class","add_load_face");   
-                      bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview);
-                      block_image.setAttribute("id",preview.filesname); 
-                      block_image.setAttribute("name",preview.name);
+                        block_image.className = "add_face_photos";
+                        bigImg.setAttribute("type","image"); 
+                        bigImg.setAttribute("class","add_load_face");   
+                        bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview);
+                        block_image.setAttribute("id",preview.filesname); 
+                        block_image.setAttribute("name",preview.name);
                     var myDiv = document.getElementById('gallery_image'); 
-                      myDiv.appendChild(block_image);                      
-                      block_image.appendChild(bigImg);
+                        myDiv.appendChild(block_image);                      
+                        block_image.appendChild(bigImg);
                                    
                 });
 
@@ -655,8 +673,27 @@
              
         },
         
+        /*Back button: back to choose*/
         gallery_back_2choose: function(){
+                $('#face_display>div').remove();
+                $('#face_display>p').remove();
+                $('#gallery_image>div').remove();
+                $('#gallery_image>p').remove();
+                $('#gallery_image>span').remove();
+                $('#gallery_image>input').remove();
+                $('#gallery').css('display','none');
+                Gallery.gallery_clean();
                 Gallery.gallery_add_facephotos();
+        },
+        
+        /*Back button: back to menu*/
+        gallery_back_2menu: function(){
+                $('#face_display>div').remove();
+                $('#face_display>p').remove();
+                $('#gallery_image>div').remove();
+                $('#gallery').css('display','none');
+                Gallery.gallery_load_frame();
+                Gallery.gallery_load_peoplephotos();
         },
         
 		/**

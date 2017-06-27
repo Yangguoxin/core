@@ -54,7 +54,7 @@
                 $('#face_display>div').remove();
 				this.viewAlbum(albumPath);
                 //Gallery.getSearch();
-                Gallery.gallery_clean();
+                //Gallery.gallery_clean();
                 Gallery.gallery_load_frame();
                 Gallery.gallery_load_peoplephotos(); 
 			}
@@ -333,11 +333,13 @@
             //$('#face_display ').on('mouseover','div',Gallery.set_mouseover);
            // $('#face_display ').on('mouseleave','div',Gallery.set_mouseleave); 
             //$('#face_display ').on('click',':button',Gallery.set_personID);
+            $('#gallery_image ').on('click','.add_face_photos_display',Gallery.get_result);
             $('#gallery_image ').on('click','#add_face_button',Gallery.gallery_choose_facephotos);
             $('#gallery_image ').on('click','.add_face_photos',Gallery.gallery_change_class);
             $('#gallery_image ').on('click','.add_face_photos_choose',Gallery.gallery_change_class_back);
             $('#face_display ').on('click','#ok_add_container',Gallery.Pick_face_2choose);
-            $('#face_display ').on('click','#button_back_add',Gallery.gallery_back_2choose);            
+            $('#face_display ').on('click','#button_back_add',Gallery.gallery_back_2choose);
+            $('#face_display ').on('click','#button_back_menu',Gallery.gallery_back_2menu);            
 			$('#save #save-button').click(Gallery.showSaveForm);
 			$('.save-form').submit(Gallery.saveForm);
 			this._renderNewButton();
