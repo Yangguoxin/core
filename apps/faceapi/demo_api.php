@@ -557,37 +557,50 @@ function api_add_person_file ($path, $name, $personId, $fileId, $mode) {
 }
 
 function add_faceimage_2json($filename) {
-    $filename = $filename.'.'."face".'.'."png";
     $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
-    $person_file = $loacl_file_dir."/"."remaining_face.json";
-    $json = file_get_contents($person_file);        
-            //create new file
-            if(!$json) {
-                    $fp = fopen($person_file, "w+");
-                    if (!is_writable($person_file)) {
+    $filename = $filename.'.'."face".'.'."png";
+    $choosed = $loacl_file_dir."/"."Choosed_face.json";
+    $remaining = $loacl_file_dir."/"."remaining_face.json";
+    $json_choosed = file_get_contents($choosed);
+    $json_remaining = file_get_contents($remaining);
+            if(!$json_remaining) {
+                    $fp = fopen($remaining, "w+");
+                    if (!is_writable($remaining)) {
                             return false;
                     }
             
-                    $data = array($filename);
-                    $data = json_encode($data);
-                    fwrite($fp, $data); 
+                    $remaining_data = array($filename);
+                    $remaining_data = json_encode($remaining_data);
+                    fwrite($fp, $remaining_data); 
                     fclose($fp);
                     return true; 
             }
-               
-            $json = json_decode($json, true);                           
-            //the file is already here.
-            $number = count($json);
+            if(!$json_choosed) {
+                    $fp = fopen($choosed, "w+");
+                    if (!is_writable($choosed)) {
+                            return false;
+                    }
+                    $choosed_data = array();
+                    $choosed_data = json_encode($choosed_data);
+                    fwrite($fp, $choosed_data); 
+                    fclose($fp); 
+            }
+    $json_choosed = json_decode($json_choosed, true);
+    $json_remaining = json_decode($json_remaining, true);
+    $number = count($json_remaining);
             for($ii = 0 ; $ii < $number; $ii++) {
-                if($filename === $json[$ii])
+                if($filename === $json_remaining[$ii])
                     return true;
             }
-            
-            //$tmp =  ($json['files']);
-            array_push($json, $filename);
+    $number_choosed = count($json_choosed);
+            for($jj = 0 ; $jj < $number_choosed; $jj++) {
+                if($filename === $json_choosed[$jj])
+                    return true;
+            }
+            array_push($json_remaining, $filename);
             //array_push($json['files'], $path);  
-            $json = json_encode($json);
-            file_put_contents($person_file, $json);
+            $json_remaining = json_encode($json_remaining);
+            file_put_contents($remaining, $json_remaining);
                 
             return true;
 }
