@@ -692,6 +692,8 @@
                 $('#face_display>p').remove();
                 $('#gallery_image>div').remove();
                 $('#gallery').css('display','none');
+                Gallery.faceflag = false;
+                Gallery.image_result = 0;
                 Gallery.gallery_load_frame();
                 Gallery.gallery_load_peoplephotos();
         },
