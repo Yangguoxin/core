@@ -464,9 +464,13 @@
                 });
             
         },
-
-        gallery_add_facephotos: function(){
-
+        
+        /*This is a utility function that jumps from the main interface to the characters
+        @for example
+        @jump to "person photos"
+        @jump to "All photos"
+         */
+        gallery_title_frame: function(title){
             $('#face_display>div').remove();
             $('#gallery_image>div').remove();
             $('#gallery_image').css('text-align','left');
@@ -480,12 +484,17 @@
             All_photo_button.className = "button_back_menu";
             All_photo_button.setAttribute("id","button_back_menu");
             All_photo_button.setAttribute("type","button");
-            All_name_tag.innerHTML = "人物";
+            All_name_tag.innerHTML = title;
             All_name_tag.className = "person_title";
             var myDiv = document.getElementById('face_display'); 
                 myDiv.appendChild(All_name_tag);
                 myDiv.appendChild(All_photo_container);
-                All_photo_container.appendChild(All_photo_button);
+                All_photo_container.appendChild(All_photo_button);   
+        },
+        
+        gallery_add_facephotos: function(){
+            var title_name = $(this).children('p').html(); 
+            Gallery.gallery_title_frame(title_name);
             var baseUrl = OC.generateUrl('apps/gallery/files/photos_choosed');                       
             var search_url = baseUrl + '?' + "filesname=" + "Choosed_face";
             $.ajax ({
