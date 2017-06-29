@@ -82,7 +82,7 @@ function _get_api_url($api_name){
     $api_key = $face_server_conf['API_KEY'];
     $api_secret = $face_server_conf['API_SECRET'];
 
-    $api_Url .='?apikey=' . urlencode($api_key);
+    $api_Url .='?apikey=' . urlencode($api_key).'&'.'secretkey='.urlencode($api_secret);
 
     return($api_Url);
 }
