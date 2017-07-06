@@ -280,6 +280,7 @@
                         name_edit.placeholder = 'name or personID';
                         myDiv.appendChild(name_edit);
                     var button = document.createElement("input");
+                        button.setAttribute("id","button_set_name");
                         button.type = 'button';
                         button.value = '修改'  ;
                         myDiv.appendChild(button);
@@ -375,6 +376,10 @@
         
         gallery_load_frame : function(){
             /*array_frame is ["id","class","id","class","str","class"]*/
+            var tmp_width = (window.innerWidth/2) ;
+            
+            
+            
             var frame_array = [ ["all_photos","Photo_frame","all_photos_child","Photo_frame_child","所有照片","Photo_text_style"],
                                 ["people_photos","Photo_frame","people_photos_child","Photo_frame_child","人物","Photo_text_style"],
                                 ["place_photos","Photo_frame","place_photos_child","Photo_frame_child","地点","Photo_text_style"],
@@ -395,6 +400,7 @@
                 myDiv.appendChild(All_Photo_frame);
                 All_Photo_frame.appendChild(All_Photo_frame_child);
                 All_Photo_frame.appendChild(All_name_tag);
+                $('.Photo_frame').css('height',tmp_width);
             }
                                   
         },
@@ -406,8 +412,8 @@
         
         gallery_load_peoplephotos: function(){
             
-            var baseUrl = OC.generateUrl('apps/gallery/files/suggest/');                       
-            var search_url = baseUrl + "**1**" + '?' + "search=" + "**1**";
+            var baseUrl = OC.generateUrl('apps/gallery/files/photos_choosed');                       
+            var search_url = baseUrl + '?' + "filesname=" + "Choosed_face";
             $.ajax ({
                 type: 'GET',
                 url: search_url,
@@ -482,19 +488,19 @@
             All_photo_container.setAttribute("id","back_menu_container");
             All_photo_button.setAttribute("value","返回");
             All_photo_button.className = "button_back_menu";
+            All_photo_button.className = "button_back_menu";
             All_photo_button.setAttribute("id","button_back_menu");
             All_photo_button.setAttribute("type","button");
             All_name_tag.innerHTML = title;
             All_name_tag.className = "person_title";
             var myDiv = document.getElementById('face_display'); 
-                myDiv.appendChild(All_name_tag);
-                myDiv.appendChild(All_photo_container);
-                All_photo_container.appendChild(All_photo_button);   
+            myDiv.appendChild(All_name_tag);
+            myDiv.appendChild(All_photo_container);
+            All_photo_container.appendChild(All_photo_button);   
         },
         
-        gallery_add_facephotos: function(){
-            var title_name = $(this).children('p').html(); 
-            Gallery.gallery_title_frame(title_name);
+        gallery_add_facephotos: function(){ 
+            Gallery.gallery_title_frame("人物");
             var baseUrl = OC.generateUrl('apps/gallery/files/photos_choosed');                       
             var search_url = baseUrl + '?' + "filesname=" + "Choosed_face";
             $.ajax ({
@@ -526,11 +532,15 @@
             var gallery_image_Div = document.getElementById('gallery_image');
             gallery_image_Div.appendChild(Add_face_photos);
             Add_face_photos.appendChild(Add_face_button);
+            var tmp_width = $('.add_face_photos_add').css('width');
+            $('.add_face_photos_add').css('height',tmp_width);
         },
                             
         gallery_change_class: function(){
              var gallery_image_Div = document.getElementById($(this).attr("id"));
              gallery_image_Div.setAttribute("class","add_face_photos_choose");
+             var tmp_width = $('.add_face_photos_choose').css('width');
+            $('.add_face_photos_choose').css('height',tmp_width);
         },
         
         gallery_change_class_back: function(){
@@ -564,8 +574,12 @@
                     var myDiv = document.getElementById('gallery_image'); 
                         myDiv.appendChild(block_image);                      
                         block_image.appendChild(bigImg);
-                                   
+                    var tmp_width = $('.add_face_photos_display').css('width');
+                    $('.add_face_photos_display').css('height',tmp_width);
+                                  
                 });
+                     
+
 
             
         },
@@ -647,7 +661,8 @@
                     var myDiv = document.getElementById('gallery_image'); 
                         myDiv.appendChild(block_image);                      
                         block_image.appendChild(bigImg);
-                                   
+                        var tmp_width = $('.add_face_photos').css('width');
+                        $('.add_face_photos').css('height',tmp_width);          
                 });
 
             

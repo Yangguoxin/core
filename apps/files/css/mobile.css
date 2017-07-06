@@ -68,7 +68,7 @@ table td.filename .nametext .innernametext {
 
 /* shorten elements for mobile */
 #uploadprogressbar, #uploadprogressbar .label.inner {
-	width: 10px;
+	width: 50px;
 }
 /* hide desktop-only parts */
 #uploadprogressbar .desktop {

@@ -426,7 +426,7 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: 180px;
+    width: 42%;
     height:210px;
     display:inline-block !important; 
     *display:inline;
@@ -459,8 +459,8 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: left;
-    width: 180px;
-    height:180px;
+    width: 100%;
+    height:85%;
     display:inline-block !important; 
     *display:inline;
     *zoom:1;
@@ -528,8 +528,8 @@ http://www.bypeople.com/author/comatosed/*/
 
 .peoplephotos {
     border-radius:15px;
-    width: 88.5px;
-    height:87px;
+    width: 50%;
+    height:49%;
     border:2.5px solid rgba(255, 255, 255, .9);
 }
 #back_menu_container{
@@ -572,7 +572,7 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: 91px;
+    width: 22%;
     height:91px;
     display:inline-block !important; 
     *display:inline;
@@ -591,7 +591,7 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: 91px;
+    width: 22%;
     height:91px;
     display:inline-block !important; 
     *display:inline;
@@ -614,8 +614,8 @@ http://www.bypeople.com/author/comatosed/*/
 }
 .add_load_face{
         color: #fff;
-        width: 90px;
-        height:90px;
+        width: 100%;
+        height:100%;
         border:none; 
 }
 #back_add_container{
@@ -664,7 +664,7 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: 91px;
+    width: 22%;
     height:91px;
     display:inline-block !important; 
     *display:inline;
@@ -683,7 +683,7 @@ http://www.bypeople.com/author/comatosed/*/
     position: relative;
     overflow: hidden;
     text-align: center;
-    width: 91px;
+    width: 22%;
     height:91px;
     display:inline-block !important; 
     *display:inline;
