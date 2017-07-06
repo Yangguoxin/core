@@ -238,5 +238,29 @@ trait Preview {
             return [$thumbnail, "ERROR"];
         }
     }
+    
+    private function getDateThumbnail($file_id,$file) {
+        require_once '/var/www/html/owncloud/apps/faceapi/demo_api.php';
+        $local_file_dir='/var/www/html/owncloud/data/admin/files';
+        $local_resize_dir='/var/www/html/owncloud/data/admin/resize_image';
+        $image = $local_resize_dir.'/'.$file_id.'.png';        
+        $file = $local_file_dir.'/'.$file;
+        
+        if(!(is_file($image))){
+            resize_image($file_id,$file);            
+        }
+        $thumbnail = [];
+        
+        if($image) {           
+            $fp = fopen($image, 'rb', 0);
+            $thumbnail['preview'] = base64_encode(fread($fp, filesize($image)));
+            fclose($fp);
+            return [$thumbnail, "OK",];
+        }
+        else {
+            return [$thumbnail, "ERROR"];
+        }
+    }
+    
 
 }

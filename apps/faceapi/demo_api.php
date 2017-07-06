@@ -416,6 +416,57 @@ function resize_upload_image($source_file_path)
     return ($local_path.$fileName);
 }
 
+function resize_image($file_id, $source_file)
+{
+    $source_info = getimagesize($source_file);
+    $source_width = $source_info[0];
+    $source_height = $source_info[1];
+    $source_mime = $source_info['mime'];
+    $target_height = $target_width = 100;
+    if($source_width > $source_height){
+        $cut_x = ($source_width - $source_height)*0.5;
+        $cut_y = 0;
+        $cut_width = $source_height;
+        $cut_height = $source_height;
+    }
+    else {
+        $cut_y = ($source_height - $source_width)*0.5;
+        $cut_x = 0;
+        $cut_width = $source_width;
+        $cut_height = $source_width;
+    }
+
+    switch ($source_mime)
+    {
+        case 'image/gif':
+            $source_image = imagecreatefromgif($source_file);
+        break;
+
+        case 'image/jpeg':
+            $source_image = imagecreatefromjpeg($source_file);
+        break;
+
+        case 'image/png':
+            $source_image = imagecreatefrompng($source_file);
+        break;
+
+        default:
+            return false;
+        
+    }
+    $target_image = imagecreatetruecolor($target_width, $target_height);
+
+    imagecopyresampled($target_image, $source_image, 0,0, $cut_x, $cut_y, 
+                       $target_width, $target_height, $cut_height, $cut_width);
+
+    $fileName = $file_id .".png";
+    $loacl_file_dir="/var/www/html/owncloud/data/admin/resize_image";
+
+    //this functin should be chagne, if there is alread a same file
+    imagepng($target_image,$loacl_file_dir.'/'.$fileName);
+
+}
+
 /*cut face image*/
 function update_person_image($personID, $source_file, $resize_file, $cut_left, $cut_right, $cut_top, $cut_bottom)
 {   

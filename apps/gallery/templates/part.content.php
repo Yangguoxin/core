@@ -157,6 +157,7 @@ style(
 <div id="footer">
 </div>
 -->    
+<div id="dateimage" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="hascontrols"></div>
 <div id="gallery" data-allow-public-upload="<?php p($_['publicUploadEnabled'])?>" class="hascontrols"></div>    
 <div id="emptycontent" class="hidden"></div>         
 <input type="hidden" name="allowShareWithLink" id="allowShareWithLink" value="yes"/>

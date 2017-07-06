@@ -57,12 +57,14 @@
                 $('#gallery_image>p').remove();
                 $('#gallery_image>span').remove();
                 $('#gallery_image>input').remove();
+		$('#dateimage>div').remove();
                 $('#gallery').css('display','none');
 				this.viewAlbum(albumPath);
                 //Gallery.getSearch();
                 //Gallery.gallery_clean();
                 Gallery.gallery_load_frame();
                 Gallery.gallery_load_peoplephotos(); 
+                Gallery.gallery_load_Allphotos();
 			}
 
 			this._setBackgroundColour();
@@ -336,6 +338,7 @@
             $('#face-button').click(Gallery.getSearch);
             //$('#face_display ').on('click','div',Gallery.get_result);
             $('#face_display ').on('click','#people_photos',Gallery.gallery_add_facephotos);
+            $('#face_display ').on('click','#all_photos',Gallery.gallery_add_allphotos);
             //$('#face_display ').on('mouseover','div',Gallery.set_mouseover);
            // $('#face_display ').on('mouseleave','div',Gallery.set_mouseleave); 
             $('#gallery_image ').on('click','#button_set_name',Gallery.set_personID);

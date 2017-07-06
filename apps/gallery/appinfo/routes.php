@@ -132,6 +132,12 @@ return [
 			'url'  => '/thumbnails',
 			'verb' => 'GET'
 		],
+		// Get date image thumbnails
+		[
+		    'name' => 'preview#get_date_photos',
+		    'url'  => '/datephotos',
+		    'verb' => 'GET'
+		],        
 		// Large preview of a file
 		[
 			'name' => 'preview#get_preview',

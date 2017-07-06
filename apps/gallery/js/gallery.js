@@ -19,6 +19,7 @@
         /*files_id is a global array that store files_id about face pictures*/
         files_id : new Array(),
         files_index : new Array(),
+	dateimage : new Array(),
         GlobalPath : '',
         /*image_result is a global variable that store pictures about faces */
         image_result : 0,
@@ -408,7 +409,31 @@
         },
         
         gallery_load_Allphotos: function(){
+            var sortType = 'date';
+            var sortOrder = 'asc';
+            var albumSortType = 'date';
+            var albumSortOrder = 'asc';
+            
+            // Clear before sorting
+            Gallery.view.clear();
 
+            // Sort the images
+            Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(sortType,
+                sortOrder));
+            Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(
+                Gallery.utility.sortBy(albumSortType,
+                    albumSortOrder));
+                    
+            var gallery_images =  Gallery.albumMap[Gallery.currentAlbum].images;
+            
+            var subload = new Array();
+            var firidx = 0;
+            subload[firidx] = new Array();               
+            subload[firidx][0] = gallery_images[firidx].fileId; 
+            subload[firidx][1] = gallery_images[firidx].mimeType;
+            subload[firidx][2] = gallery_images[firidx].path;
+            
+            Gallery.load_menudate_imge(subload);                    
             
         },
         
@@ -718,12 +743,221 @@
                 $('#face_display>p').remove();
                 $('#gallery_image>div').remove();
                 $('#gallery').css('display','none');
-                Gallery.faceflag = false;
-                Gallery.image_result = 0;
+                Gallery.gallery_clean();
                 Gallery.gallery_load_frame();
                 Gallery.gallery_load_peoplephotos();
+                Gallery.gallery_load_Allphotos();
+                Gallery.faceflag = false;
+                Gallery.image_result = 0;
+        },
+
+        loadimage_find_preview: function(image,loadimage){
+            for(var i=0; i<loadimage.length; i++){
+                if(image.fileId == loadimage[i][1]){
+                    return [loadimage[i][2],loadimage[i][4]];
+                }
+            }
         },
         
+        show_load_allimage: function(loadimage){        
+            for(var i=0; i<Gallery.dateimage.length; i++){
+                var daterow = document.createElement("div");
+                var datelabel = document.createElement("p");
+                daterow.setAttribute("id","daterow"+i);
+                daterow.setAttribute("class","daterow");
+                datelabel.setAttribute("id","p"+i);
+                datelabel.setAttribute("class","datelabel");
+                
+                var myDiv = document.getElementById('dateimage'); 
+                myDiv.appendChild(daterow);
+                var myP = document.getElementById("daterow"+i);
+                myP.appendChild(datelabel);
+                document.getElementById("p"+i).innerText = Gallery.dateimage[i].time;
+                
+                var images = new Array();
+                images = Gallery.dateimage[i].file;
+                                                  
+                for(var j=0; j<images.length; j++){
+                    var image = images[j];
+                    var preview = Gallery.loadimage_find_preview(image,loadimage);
+                    if(preview[0]=='' || preview[1]==''){
+                        continue;
+                    }
+                    var a_image = document.createElement("a");
+                    var dateimage  = document.createElement("input");
+                    dateimage.setAttribute("type","image");
+                    dateimage.setAttribute("class","dateimage_element");
+                    a_image.setAttribute("class","dateimage_element");
+                    a_image.setAttribute("data-path",image.path);
+                    a_image.setAttribute("href",'#' + encodeURIComponent(image.path));
+                    dateimage.src=('data:' + preview[0] + ';base64,' + preview[1]);
+                    daterow.appendChild(a_image);
+                    a_image.appendChild(dateimage);
+                }
+                
+            }              
+        },
+
+        load_menudate_imge: function(list){
+
+            var face_list = list;
+            var i = 0;
+            if(face_list.length <= 0)
+                return false;
+            var params = {
+                dateimg_list: face_list.join(';')
+            };
+            
+            var url =Gallery.utility.buildGalleryUrl('datephotos', '', params);
+            var eventSource = new Gallery.EventSource(url);
+                 eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
+                    var bigImg = document.createElement("input");
+                    bigImg.setAttribute("type","image"); 
+                    bigImg.setAttribute("class","datemenuphotos");   
+                    bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview); 
+                    var myDiv = document.getElementById('all_photos_child'); 
+                    myDiv.appendChild(bigImg);                              
+                });                          
+        },
+                        
+        load_alldate_imge: function(list){
+
+            var face_list = list;
+            var i = 0;
+            if(face_list.length <= 0)
+                return false;
+            var params = {
+                dateimg_list: face_list.join(';')
+            };
+            
+            var dateimage = new Array();
+            var url =Gallery.utility.buildGalleryUrl('datephotos', '', params);
+            var eventSource = new Gallery.EventSource(url);
+                 eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
+                     var j = 0;
+                     dateimage[i] = new Array();  
+                     dateimage[i][j++] = preview.status;
+                     dateimage[i][j++] = preview.fileId;
+                     dateimage[i][j++] = preview.mimetype;
+                     dateimage[i][j++] = preview.name;
+                     dateimage[i][j] = preview.preview;
+                     i++;   
+                     if(i >= face_list.length){
+                         Gallery.show_load_allimage(dateimage);
+                     }                                
+                });                          
+        },
+        
+        TranTime: function(time) {
+            //$time = strtotime($time);
+            var nowTstr = new Date();
+            var nowTime = nowTstr.getTime(); 
+            var timeStr = new Date(time*1000);
+            var message = ''; 
+            //一年前
+            if (nowTstr.getFullYear() != timeStr.getFullYear()) {
+                message = timeStr.toLocaleDateString();
+            }
+            if (nowTstr.getMonth() != timeStr.getMonth()) {
+                message = timeStr.toLocaleDateString();
+            }            
+            else {
+                //同一年
+                var days = nowTstr.getDate() - timeStr.getDate();
+                switch(true){
+                    //一天内
+                    case (0 == days):
+                        var seconds = Math.round(nowTime/1000) - time;
+                        if (seconds < 60) {
+                            message = 'Moment Ago';
+                            break;
+                        }
+                        message = 'Today';
+                        break;
+                        //昨天
+                    case (1 == days):
+                        message = 'Yesterday';
+                        break;
+                    default:
+                        message = timeStr.toLocaleDateString();
+                        break;
+                }
+            }
+            
+            return message;
+        },
+        
+        dateimage_class: function(images){
+            var allphoto = new Array();            
+            allphoto = images;
+            
+            var map = new Object();
+            var subload = new Array();
+
+            for(var i=0; i<allphoto.length; i++){
+                var item = allphoto[i];
+                var time = Gallery.TranTime(item.mTime);
+                              
+                subload[i] = new Array();               
+                subload[i][0] = item.fileId; 
+                subload[i][1] = item.mimeType;
+                subload[i][2] = item.path;  
+                            
+                if(!map[time]){
+                    var array = new Array();
+                    array.push(item);
+                    map[time] = {time:time,file:array};
+                }else{
+                    var  temp = map[time];
+                    temp.file.push(item);
+                    map[time] = temp;
+                }
+            }
+            
+            var resultArray = new Array();
+            for(var key in map){
+                resultArray.push(map[key]);
+            }  
+            
+            Gallery.dateimage = resultArray;  
+            
+            return subload;        
+        },
+        
+        gallery_add_allphotos: function(){
+            var sortType = 'date';
+            var sortOrder = 'asc';
+            var albumSortType = 'date';
+            var albumSortOrder = 'asc';
+            
+            $('#face_display>div').remove();
+            $('#gallery_image>div').remove();
+            $('#dateimage>div').remove();
+            
+            // Clear before sorting
+            Gallery.view.clear();
+
+            // Sort the images
+            Gallery.albumMap[Gallery.currentAlbum].images.sort(Gallery.utility.sortBy(sortType,
+                sortOrder));
+            Gallery.albumMap[Gallery.currentAlbum].subAlbums.sort(
+                Gallery.utility.sortBy(albumSortType,
+                    albumSortOrder));
+                    
+            // Refresh the view
+            Gallery.view.viewAlbum(Gallery.currentAlbum);            
+
+            //class images and get subload array
+            var gallery_images =  Gallery.albumMap[Gallery.currentAlbum].images;
+            var subload = Gallery.dateimage_class(gallery_images);
+              
+            //get base64 from back            
+            Gallery.load_alldate_imge(subload);
+        
+            $('#dateimage').css('display','block'); 
+                                
+                                   
+        },            
 		/**
 		 * Switches to the Files view
 		 *

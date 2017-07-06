@@ -170,4 +170,31 @@ class PreviewController extends Controller {
         // @codeCoverageIgnoreStart
         
     }
+    
+    public function getDatePhotos($dateimg_list) {
+            $idsArray = explode(';', $dateimg_list);
+            $local_path = '/var/www/html/owncloud/data/admin/resize_image/';
+            if(!($dh = opendir($local_path))){
+                mkdir($local_path);
+            }
+            closedir($dh);
+             
+        //foreach ($fileArray as $id) {
+            foreach ($idsArray as $file) {
+            $Date_str = explode(',', $file);
+            // Casting to integer here instead of using array_map to extract IDs from the URL
+            list($thumbnail, $status) = $this->getDateThumbnail($Date_str[0],$Date_str[2]);
+
+            $thumbnail['fileId'] = $Date_str[0];
+            $thumbnail['status'] = $status;
+            $thumbnail['mimetype'] = "image/png";
+            $thumbnail['name'] = $Date_str[2];
+            $this->eventSource->send('preview', $thumbnail);
+        }
+        $this->eventSource->close();
+
+        $this->exitController();
+        // @codeCoverageIgnoreStart
+        
+    }    
 }
