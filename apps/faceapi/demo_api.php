@@ -330,7 +330,7 @@ function api_detect_face($input_file) {
 /*Resize image into '/owncloud/data/admin/resize_upload_image'*/
 function resize_upload_image($source_file_path)
 {   
-    if( ($test = abs(filesize($source_file_path))) <= 900000)
+    if( ($test = abs(filesize($source_file_path))) <= 700000)
     {           
         return $source_file_path;
     }
