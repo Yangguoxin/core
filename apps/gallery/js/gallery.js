@@ -18,6 +18,7 @@
         faceflag : false,
         /*files_id is a global array that store files_id about face pictures*/
         files_id : new Array(),
+        files_index : new Array(),
         GlobalPath : '',
         /*image_result is a global variable that store pictures about faces */
         image_result : 0,
@@ -300,7 +301,8 @@
                             for(i=0;i<fileslength;i++){
                                  Gallery.files_id[i]= data.files[i].id;
                             }
-                            /*Change faceflag to true */   
+                            /*Change faceflag to true */ 
+                            Gallery.files_index = [];  
                             Gallery.faceflag = true; 
                             Gallery.view.viewAlbum(Gallery.GlobalPath);     
                                 },

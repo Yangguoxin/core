@@ -314,8 +314,17 @@
 			if (this.errorLoadingImage) {
 				this.current -= 1;
 			}
-			this.current = (this.current + 1) % this.images.length;
-			var next = (this.current + 1) % this.images.length;
+            if(Gallery.faceflag === true){
+                var c_index = Gallery.files_index.indexOf(this.current);
+                c_index = (c_index + 1) % Gallery.files_index.length;
+                this.current = Gallery.files_index[c_index];
+                var n_index = (c_index + 1) % Gallery.files_index.length;
+                var next =  Gallery.files_index[n_index];      
+            }
+            else{
+			    this.current = (this.current + 1) % this.images.length;
+			    var next = (this.current + 1) % this.images.length;
+            }
 			this._updateSlideshow(next);
 		},
 
@@ -328,10 +337,20 @@
 			this._setName('');
 			this.slideshow.hideErrorNotification();
 			this.zoomablePreview.reset();
+            
+            if(Gallery.faceflag === true){
+                var c_index = Gallery.files_index.indexOf(this.current);
+                c_index = (c_index - 1 + Gallery.files_index.length) % Gallery.files_index.length;
+                this.current = Gallery.files_index[c_index];
+                var p_index = (c_index - 1 + Gallery.files_index.length) % Gallery.files_index.length;
+                var previous =  Gallery.files_index[p_index];      
+            }
+            else{ 
+			    this.current = (this.current - 1 + this.images.length) % this.images.length;
+			    var previous = (this.current - 1 + this.images.length) % this.images.length;
 
-			this.current = (this.current - 1 + this.images.length) % this.images.length;
-			var previous = (this.current - 1 + this.images.length) % this.images.length;
-			this._updateSlideshow(previous);
+            }
+                this._updateSlideshow(previous);
 		},
 
 		/**

@@ -181,6 +181,7 @@
                        if(Gallery.files_id[album.viewedItems] === Number(images[i].fileId)){
                                tmp = i;
                                Gallery.image_result = tmp;
+                               Gallery.files_index[album.viewedItems]= tmp;
                                break;
                        }     
                        Gallery.image_result = tmp;
