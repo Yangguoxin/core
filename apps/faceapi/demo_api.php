@@ -282,52 +282,192 @@ function api_detect_face($input_file) {
     return($res_obj);
 }
 
-/*cut face*/
-function update_person_image($personID, $source_file, $cut_left,$cut_right, $cut_top, $cut_bottom)
+
+/*function update_person_image($personID, $source_file, $cut_left,$cut_right, $cut_top, $cut_bottom)
 {
-$source_info = getimagesize($source_file);
-$source_width = $source_info[0];
-$source_height = $source_info[1];
-$source_mime = $source_info['mime'];
-$target_height = $target_width = 100;
+    $source_info = getimagesize($source_file);
+    $source_width = $source_info[0];
+    $source_height = $source_info[1];
+    $source_mime = $source_info['mime'];
+    $target_height = $target_width = 100;
 
-$cut_x = $cut_left;
-$cut_y = $cut_top;
-$cut_width = ($cut_right - $cut_left);
-$cut_height = ($cut_bottom - $cut_top );
+    $cut_x = $cut_left;
+    $cut_y = $cut_top;
+    $cut_width = ($cut_right - $cut_left);
+    $cut_height = ($cut_bottom - $cut_top );
 
-switch ($source_mime)
-{
-    case 'image/gif':
-        $source_image = imagecreatefromgif($source_file);
-    break;
+    switch ($source_mime)
+    {
+        case 'image/gif':
+            $source_image = imagecreatefromgif($source_file);
+        break;
 
-    case 'image/jpeg':
-        $source_image = imagecreatefromjpeg($source_file);
-    break;
+        case 'image/jpeg':
+            $source_image = imagecreatefromjpeg($source_file);
+        break;
 
-    case 'image/png':
-        $source_image = imagecreatefrompng($source_file);
-    break;
+        case 'image/png':
+            $source_image = imagecreatefrompng($source_file);
+        break;
 
-    default:
-        return false;
+        default:
+            return false;
+        
+    }
+    $target_image = imagecreatetruecolor($target_width, $target_height);
+
+    imagecopyresampled($target_image, $source_image, 0,0, $cut_x, $cut_y, 
+                       $target_width, $target_height, $cut_height, $cut_width);
+
+    $fileName = $personID .".face.png";
+    $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+
+    //this functin should be chagne, if there is alread a same file
+    imagepng($target_image,$loacl_file_dir.'/'.$fileName);
+
+}
+*/
+/*Resize image into '/owncloud/data/admin/resize_upload_image'*/
+function resize_upload_image($source_file_path)
+{   
+    if( ($test = abs(filesize($source_file_path))) <= 900000)
+    {           
+        return $source_file_path;
+    }
+    $local_path = '/var/www/html/owncloud/data/admin/resize_upload_image/';
+    if(!($dh = opendir($local_path))){
+        mkdir($local_path);
+    }
+    closedir($dh);
+    $source_info = getimagesize($source_file_path);
+    $source_mime = $source_info['mime'];   
+    switch ($source_mime)
+    {
+        case 'image/gif':
+            $source_image = imagecreatefromgif($source_file_path);
+        break;
+        /*if the image is made by iphone,we should change this*/
+        case 'image/jpeg':        
+        $data = imagecreatefromstring(file_get_contents($source_file_path));
+        $exif = exif_read_data($source_file_path, 'EXIF',0);
+        if(!empty($exif['Orientation'])) {
+          switch($exif['Orientation']) {
+                  case 8:
+                  $data = imagerotate($data, 90, 0);
+                  break;
+                  case 3:
+                  $data = imagerotate($data, 180, 0);
+                  break;
+                  case 6:
+                  $data = imagerotate($data, -90, 0);
+                  break;
+                  }
+          imagejpeg($data, $source_file_path);
+          }
+        $source_image = imagecreatefromjpeg($source_file_path);  
+        break;
+
+        case 'image/png':
+            $source_image = imagecreatefrompng($source_file_path);
+        break;
+
+        default:
+            return false;
+        
+    }
     
+    $source_info = getimagesize($source_file_path);
+    $source_width = $source_info[0];
+    $source_height = $source_info[1];
+    $source_ratio = ($source_height/$source_width);
+    $target_width = 300;
+    $target_height = $target_width*$source_ratio; 
+    
+    $target_image = imagecreatetruecolor($target_width, $target_height);
+
+    imagecopyresampled($target_image, $source_image, 0,0, 0, 0, 
+                       $target_width, $target_height, $source_width, $source_height);
+    $file_parts = explode('/',$source_file_path);
+    $fileName = $file_parts[(count($file_parts)-1)];
+    $fileName = explode('.',$fileName);
+    $fileName = $fileName[0];
+        switch ($source_mime)
+    {
+        case 'image/gif':
+        $fileName = $fileName .".gif";
+        imagegif($target_image,$local_path.$fileName);     
+        break;
+
+        case 'image/jpeg':
+        $fileName = $fileName .".jpg";
+        imagejpeg($target_image,$local_path.$fileName);  
+        break;
+
+        case 'image/png':
+        $fileName = $fileName .".png";
+        imagepng($target_image,$local_path.$fileName);   
+        break;
+
+        default:
+            return false;
+        
+    }
+    //this functin should be chagne, if there is alread a same file
+    return ($local_path.$fileName);
 }
-$target_image = imagecreatetruecolor($target_width, $target_height);
 
-imagecopyresampled($target_image, $source_image, 0,0, $cut_x, $cut_y, 
-                   $target_width, $target_height, $cut_height, $cut_width);
+/*cut face image*/
+function update_person_image($personID, $source_file, $resize_file, $cut_left, $cut_right, $cut_top, $cut_bottom)
+{   
+    $resize_info = getimagesize($resize_file);
+    $source_info = getimagesize($source_file);
+    $source_width = $source_info[0];
+    $source_height = $source_info[1];
+    $source_mime = $source_info['mime'];
+    $resize_width = $resize_info[0];
+    $source_ratio = ($source_height/$source_width);
+    $source_resize = $source_width/$resize_width;
 
-$fileName = $personID .".face.png";
-$loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+    $target_height = $target_width = 100;
+    $cut_left   = $cut_left * $source_resize;
+    $cut_right  = $cut_right * $source_resize;
+    $cut_top    = $cut_top * $source_resize;
+    $cut_bottom = $cut_bottom * $source_resize;
+    $cut_x = $cut_left;
+    $cut_y = $cut_top;
+    $cut_width = ($cut_right - $cut_left);
+    $cut_height = ($cut_bottom - $cut_top );
 
-//this functin should be chagne, if there is alread a same file
-imagepng($target_image,$loacl_file_dir.'/'.$fileName);
+    switch ($source_mime)
+    {
+        case 'image/gif':
+            $source_image = imagecreatefromgif($source_file);
+        break;
+
+        case 'image/jpeg':
+            $source_image = imagecreatefromjpeg($source_file);
+        break;
+
+        case 'image/png':
+            $source_image = imagecreatefrompng($source_file);
+        break;
+
+        default:
+            return false;
+        
+    }
+    $target_image = imagecreatetruecolor($target_width, $target_height);
+
+    imagecopyresampled($target_image, $source_image, 0,0, $cut_x, $cut_y, 
+                       $target_width, $target_height, $cut_height, $cut_width);
+
+    $fileName = $personID .".face.png";
+    $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+
+    //this functin should be chagne, if there is alread a same file
+    imagepng($target_image,$loacl_file_dir.'/'.$fileName);
 
 }
-
-
 
 $loacl_file_dir='/var/www/html/owncloud/data/admin/files';
 
@@ -408,16 +548,29 @@ function getFaceThumbnail($dir, $name){
 
 /*with default the person is "??xxxx", */
 function tagPerson($dir, $oldName, $newName,$personID){
+    $loacl_file_dir="/var/www/html/owncloud/data/admin/files";
+    $choosed = $loacl_file_dir."/"."Choosed_face.json";
+    $json_choosed = file_get_contents($choosed);
+    $json_choosed = json_decode($json_choosed, true);
     $check_name = $personID.'.'.$oldName;
     $faceimage = getFaceThumbnail($dir, $check_name);
     if ($faceimage !== ""){
             $file_parts = explode('.',$faceimage); 
-            $file_ext1 = strtolower(array_pop($file_parts));
-            $file_ext2 = strtolower(array_pop($file_parts));
-            $file_ext3 = strtolower(array_pop($file_parts));
-            $file_ext4 = strtolower(array_pop($file_parts)); 
-        rename($file_ext4.'.'.$oldName.".face.png", 
-            $file_ext4.'.'.$newName.".face.png");
+            $file_ext1 =$file_parts[3];
+            $file_ext2 =$file_parts[2];
+            $file_ext3 =$file_parts[1];
+            $file_ext4 =$file_parts[0];
+            rename($file_ext4.'.'.$oldName.".face.png", 
+                    $file_ext4.'.'.$newName.".face.png");
+            $file_personid = explode('/',$file_ext4); 
+            $before_name = $file_personid[8].'.'.$oldName.".face.png";
+            $after_name = $file_personid[8].'.'.$newName.".face.png";
+            $key = array_search($before_name, $json_choosed);
+            if ($key === false)
+                return false;
+            $json_choosed[$key] = $after_name;
+            $json_choosed = json_encode($json_choosed);
+             file_put_contents($choosed, $json_choosed);
     }                 
     else
         return false;

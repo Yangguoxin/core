@@ -251,9 +251,10 @@ if (\OC\Files\Filesystem::isValidPath($dir) === true) {
         //local path = $dir + $relativePath
         $face_filename = $files['name'][$i];
         $face_filename = $loacl_file_dir.$returnedDir.'/'.$face_filename;
+        $resize_filename = resize_upload_image($face_filename);
         //call face detect api to get *.json file.   
-        if($face_result = api_detect_face($face_filename)) {
-            $json_name = rtrim($face_filename, '.');
+        if($face_result = api_detect_face($resize_filename)) {
+            $json_name = rtrim($resize_filename, '.');
             if($json_file = fopen($json_name.'.json', "w")) {
                 fwrite($json_file, $face_result);
                 fclose($json_file);
@@ -273,8 +274,8 @@ if (\OC\Files\Filesystem::isValidPath($dir) === true) {
                     //adjust the thresthold for updating the thumbnail,
                     //small or negative faceness will impact the customer experience.
                     if($face_json_result['faces'][$ii]['faceness'] > 0.1) {
-                        update_person_image($PersonName,
-                                        $face_filename,$face_json_result['faces'][$ii]['left'],
+                        update_person_image($PersonName,$face_filename,
+                                        $resize_filename,$face_json_result['faces'][$ii]['left'],
                                         $face_json_result['faces'][$ii]['right'],
                                         $face_json_result['faces'][$ii]['top'],
                                         $face_json_result['faces'][$ii]['bottom']);
@@ -299,7 +300,7 @@ if (\OC\Files\Filesystem::isValidPath($dir) === true) {
                     $personId =  $person_add_json_result['personId'];                          
                     $link_result = link_person_to_face($personId, $face_id);
                     $PersonName = $personId.'.'.$person_rand;
-                    update_person_image($PersonName, $face_filename,
+                    update_person_image($PersonName,$face_filename ,$resize_filename,
                                         $face_json_result['faces'][$ii]['left'],
                                         $face_json_result['faces'][$ii]['right'],
                                         $face_json_result['faces'][$ii]['top'],
