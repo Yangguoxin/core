@@ -149,7 +149,7 @@
 		 */
 		fillNextRow: function (row) {
 			var def = new $.Deferred();
-			var numberOfThumbnailsToPreload = 6;
+			var numberOfThumbnailsToPreload = 60;
 			var buffer = 5;
 
 			/**
