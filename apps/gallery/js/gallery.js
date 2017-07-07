@@ -969,7 +969,17 @@
             $('#dateimage').css('display','block'); 
                                 
                                    
-        },            
+        }, 
+        
+        gallery_place_map:function(){
+            var map = new BMap.Map("place_photos_child");
+            map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+            map.addControl(new BMap.MapTypeControl());
+            map.setCurrentCity("北京");
+            map.enableScrollWheelZoom(true);
+
+
+        },           
 		/**
 		 * Switches to the Files view
 		 *

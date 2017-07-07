@@ -65,6 +65,7 @@
                 Gallery.gallery_load_frame();
                 Gallery.gallery_load_peoplephotos(); 
                 Gallery.gallery_load_Allphotos();
+                Gallery.gallery_place_map();
 			}
 
 			this._setBackgroundColour();
