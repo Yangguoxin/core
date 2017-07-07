@@ -57,7 +57,7 @@
                 $('#gallery_image>p').remove();
                 $('#gallery_image>span').remove();
                 $('#gallery_image>input').remove();
-		$('#dateimage>div').remove();
+		        $('#dateimage>div').remove();
                 $('#gallery').css('display','none');
 				this.viewAlbum(albumPath);
                 //Gallery.getSearch();

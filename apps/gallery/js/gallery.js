@@ -19,7 +19,7 @@
         /*files_id is a global array that store files_id about face pictures*/
         files_id : new Array(),
         files_index : new Array(),
-	dateimage : new Array(),
+	    dateimage : new Array(),
         GlobalPath : '',
         /*image_result is a global variable that store pictures about faces */
         image_result : 0,
@@ -507,7 +507,7 @@
             $('#face_display>div').remove();
             $('#gallery_image>div').remove();
             $('#gallery_image').css('text-align','left');
-            Gallery.gallery_clean();
+            //Gallery.gallery_clean();
             /*Create button in face_display*/
             var All_name_tag       = document.createElement("p");
             var All_photo_container= document.createElement("div");
@@ -742,6 +742,7 @@
                 $('#face_display>div').remove();
                 $('#face_display>p').remove();
                 $('#gallery_image>div').remove();
+                $('#dateimage>div').remove();
                 $('#gallery').css('display','none');
                 Gallery.gallery_clean();
                 Gallery.gallery_load_frame();
@@ -934,6 +935,7 @@
             $('#gallery_image>div').remove();
             $('#dateimage>div').remove();
             
+            Gallery.gallery_title_frame("所有照片");
             // Clear before sorting
             Gallery.view.clear();
 
