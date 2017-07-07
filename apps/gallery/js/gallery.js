@@ -432,8 +432,16 @@
             subload[firidx][0] = gallery_images[firidx].fileId; 
             subload[firidx][1] = gallery_images[firidx].mimeType;
             subload[firidx][2] = gallery_images[firidx].path;
-            
-            Gallery.load_menudate_imge(subload);                    
+                       
+            if(window.dateloadimage == undefined) {
+                Gallery.load_menudate_image(subload); 
+            }else{
+                if(window.dateloadimage.length == gallery_images.length) {
+                    Gallery.view_menudate_image(window.dateloadimage[0][2],window.dateloadimage[0][4]);
+                }else{
+                    Gallery.load_menudate_image(subload);                
+                }                
+            }                               
             
         },
         
@@ -799,25 +807,38 @@
             }              
         },
 
-        load_menudate_imge: function(list){
+        view_menudate_image: function(mimetype,preview){
+                var Img = document.createElement("input");
+                Img.setAttribute("type","image"); 
+                Img.setAttribute("class","datemenuphotos");   
+                Img.src=('data:' + mimetype + ';base64,' + preview); 
+                var myDiv = document.getElementById('all_photos_child'); 
+                myDiv.appendChild(Img);             
+        },
+        
+        load_menudate_image: function(list){
 
             var face_list = list;
             var i = 0;
+            var fileId = 0;
+            var type = 1;
+                        
             if(face_list.length <= 0)
                 return false;
+                
+            for(var idx=0; idx<face_list.length; idx++){
+                face_list[idx][fileId] = face_list[idx][fileId] + '#';
+                face_list[idx][type] = face_list[idx][type] + '#';
+            }
+            
             var params = {
-                dateimg_list: face_list.join(';')
+                dateimg_list: face_list.join('|')
             };
             
             var url =Gallery.utility.buildGalleryUrl('datephotos', '', params);
             var eventSource = new Gallery.EventSource(url);
                  eventSource.listen('preview',function (/**{filesname, status, mimetype, preview}*/ preview) {
-                    var bigImg = document.createElement("input");
-                    bigImg.setAttribute("type","image"); 
-                    bigImg.setAttribute("class","datemenuphotos");   
-                    bigImg.src=('data:' + preview.mimetype + ';base64,' + preview.preview); 
-                    var myDiv = document.getElementById('all_photos_child'); 
-                    myDiv.appendChild(bigImg);                              
+                         Gallery.view_menudate_image(preview.mimetype,preview.preview);    
                 });                          
         },
                         
@@ -825,10 +846,18 @@
 
             var face_list = list;
             var i = 0;
+            var fileId = 0;
+            var type = 1;
             if(face_list.length <= 0)
                 return false;
+                
+            for(var idx=0; idx<face_list.length; idx++){
+                face_list[idx][fileId] = face_list[idx][fileId] + '#';
+                face_list[idx][type] = face_list[idx][type] + '#';
+            }
+            
             var params = {
-                dateimg_list: face_list.join(';')
+                dateimg_list: face_list.join('|')
             };
             
             var dateimage = new Array();

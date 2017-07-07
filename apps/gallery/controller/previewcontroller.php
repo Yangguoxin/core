@@ -172,7 +172,7 @@ class PreviewController extends Controller {
     }
     
     public function getDatePhotos($dateimg_list) {
-            $idsArray = explode(';', $dateimg_list);
+            $idsArray = explode('|', $dateimg_list);
             $local_path = '/var/www/html/owncloud/data/admin/resize_image/';
             if(!($dh = opendir($local_path))){
                 mkdir($local_path);
@@ -181,7 +181,7 @@ class PreviewController extends Controller {
              
         //foreach ($fileArray as $id) {
             foreach ($idsArray as $file) {
-            $Date_str = explode(',', $file);
+            $Date_str = explode('#,', $file);
             // Casting to integer here instead of using array_map to extract IDs from the URL
             list($thumbnail, $status) = $this->getDateThumbnail($Date_str[0],$Date_str[2]);
 
