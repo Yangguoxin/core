@@ -820,10 +820,19 @@
 
             var face_list = list;
             var i = 0;
+            var fileId = 0;
+            var type = 1;
+                        
             if(face_list.length <= 0)
                 return false;
+                
+            for(var idx=0; idx<face_list.length; idx++){
+                face_list[idx][fileId] = face_list[idx][fileId] + '#';
+                face_list[idx][type] = face_list[idx][type] + '#';
+            }
+            
             var params = {
-                dateimg_list: face_list.join(';')
+                dateimg_list: face_list.join('|')
             };
             
             var url =Gallery.utility.buildGalleryUrl('datephotos', '', params);
@@ -837,10 +846,18 @@
 
             var face_list = list;
             var i = 0;
+            var fileId = 0;
+            var type = 1;
             if(face_list.length <= 0)
                 return false;
+                
+            for(var idx=0; idx<face_list.length; idx++){
+                face_list[idx][fileId] = face_list[idx][fileId] + '#';
+                face_list[idx][type] = face_list[idx][type] + '#';
+            }
+            
             var params = {
-                dateimg_list: face_list.join(';')
+                dateimg_list: face_list.join('|')
             };
             
             var dateimage = new Array();
