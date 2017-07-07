@@ -507,7 +507,6 @@
             $('#face_display>div').remove();
             $('#gallery_image>div').remove();
             $('#gallery_image').css('text-align','left');
-            //Gallery.gallery_clean();
             /*Create button in face_display*/
             var All_name_tag       = document.createElement("p");
             var All_photo_container= document.createElement("div");
@@ -528,6 +527,7 @@
         
         gallery_add_facephotos: function(){ 
             Gallery.gallery_title_frame("人物");
+            Gallery.gallery_clean();
             var baseUrl = OC.generateUrl('apps/gallery/files/photos_choosed');                       
             var search_url = baseUrl + '?' + "filesname=" + "Choosed_face";
             $.ajax ({
