@@ -20,6 +20,8 @@
 		<link rel="icon" href="<?php print_unescaped(image_path($_['appid'], 'favicon.ico')); /* IE11+ supports png */ ?>">
 		<link rel="apple-touch-icon-precomposed" href="<?php print_unescaped(image_path($_['appid'], 'favicon-touch.png')); ?>">
 		<link rel="mask-icon" sizes="any" href="<?php print_unescaped(image_path($_['appid'], 'favicon-mask.svg')); ?>" color="#1d2d44">
+        <script type="text/javascript" src="https://api.map.baidu.com/api?v=2.0&ak=HlQBObc4VDLpXaOtsuLI5ZaqU6p1TDay&s=1;"></script>
+        <script type="text/javascript" src="https://api.map.baidu.com/getscript?v=2.0&ak=HlQBObc4VDLpXaOtsuLI5ZaqU6p1TDay&services=&t=20170707103901"></script>
 		<?php foreach($_['cssfiles'] as $cssfile): ?>
 			<link rel="stylesheet" href="<?php print_unescaped($cssfile); ?>">
 		<?php endforeach; ?>

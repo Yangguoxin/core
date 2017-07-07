@@ -36,6 +36,7 @@ class ContentSecurityPolicyTest extends \Test\TestCase {
 		$expectedPolicy = "default-src 'none';script-src 'self' www.owncloud.com 'unsafe-eval';style-src 'self' 'unsafe-inline';img-src 'self' data: blob:;font-src 'self';connect-src 'self';media-src 'self'";
 
 		$this->contentSecurityPolicy->addAllowedScriptDomain('www.owncloud.com');
+        $this->contentSecurityPolicy->addAllowedScriptDomain('api.map.baidu.com');
 		$this->assertSame($expectedPolicy, $this->contentSecurityPolicy->buildPolicy());
 	}
 
