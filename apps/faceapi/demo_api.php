@@ -422,7 +422,7 @@ function resize_image($file_id, $source_file)
     $source_width = $source_info[0];
     $source_height = $source_info[1];
     $source_mime = $source_info['mime'];
-    $target_height = $target_width = 100;
+    $target_height = $target_width = 300;
     if($source_width > $source_height){
         $cut_x = ($source_width - $source_height)*0.5;
         $cut_y = 0;

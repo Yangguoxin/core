@@ -712,7 +712,7 @@ http://www.bypeople.com/author/comatosed/*/
     text-align: justify;
     top: 45px;
     padding-bottom: 10px;
-    margin-bottom: 45px;
+    margin-bottom: 90px;
     margin-top: 0;
 }
 .daterow {
@@ -734,11 +734,20 @@ http://www.bypeople.com/author/comatosed/*/
     line-height:32px;
     color:#bec1d5
 }
-.dateimage_element {
+input.dateimage_element {
     position: relative;
     display: inline-block;
-    height: auto;
-    width: auto;
+    height: 100%;
+    width: 100%;
+    padding: 0;
+    margin: 2px;
+    vertical-align: top;    
+}
+a.dateimage_element {
+    position: relative;
+    display: inline-block;
+    height: 24%;
+    width: 24%;
     padding: 0;
     margin: 2px;
     vertical-align: top;    
