@@ -845,6 +845,7 @@
                      i++;   
                      if(i >= face_list.length){
                          Gallery.show_load_allimage(dateimage);
+                         window.dateloadimage = dateimage;
                      }                                
                 });                          
         },
@@ -953,8 +954,17 @@
             var gallery_images =  Gallery.albumMap[Gallery.currentAlbum].images;
             var subload = Gallery.dateimage_class(gallery_images);
               
-            //get base64 from back            
-            Gallery.load_alldate_imge(subload);
+            //get base64 from back 
+            if(window.dateloadimage == undefined) {
+                Gallery.load_alldate_imge(subload); 
+            }else{
+                if(window.dateloadimage.length == gallery_images.length) {
+                    Gallery.show_load_allimage(window.dateloadimage);
+                }else{
+                    Gallery.load_alldate_imge(subload);                
+                }                
+            }
+
         
             $('#dateimage').css('display','block'); 
                                 
