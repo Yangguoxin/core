@@ -803,8 +803,19 @@
                     daterow.appendChild(a_image);
                     a_image.appendChild(dateimage);
                 }
-                
-            }              
+            }
+            
+            var daterow = document.createElement("div");
+            var datelabel = document.createElement("p");
+            daterow.setAttribute("id","daterow"+i);
+            daterow.setAttribute("class","daterow");
+            datelabel.setAttribute("id","p"+i);
+            datelabel.setAttribute("class","spacephone");
+            
+            var myDiv = document.getElementById('dateimage'); 
+            myDiv.appendChild(daterow);
+            var myP = document.getElementById("daterow"+i);
+            myP.appendChild(datelabel);                     
         },
 
         view_menudate_image: function(mimetype,preview){

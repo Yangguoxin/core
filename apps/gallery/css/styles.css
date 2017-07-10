@@ -712,7 +712,7 @@ http://www.bypeople.com/author/comatosed/*/
     text-align: justify;
     top: 45px;
     padding-bottom: 10px;
-    margin-bottom: 90px;
+    margin-bottom: 10px;
     margin-top: 0;
 }
 .daterow {
@@ -733,6 +733,15 @@ http://www.bypeople.com/author/comatosed/*/
     font-size:18px;
     line-height:32px;
     color:#bec1d5
+}
+.spacephone {
+    position: relative;
+    overflow: hidden;
+    text-align: justify;
+    top: 45px;
+    padding-bottom: 10px;
+    margin-bottom: 45px;
+    margin-top: 0;   
 }
 input.dateimage_element {
     position: relative;
