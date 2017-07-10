@@ -329,7 +329,7 @@ class EmptyContentSecurityPolicy {
 				$policy .= ' \'unsafe-inline\'';
 			}
 			if($this->evalScriptAllowed) {
-				$policy .= ' \'unsafe-eval\' https://api.map.baidu.com https://gss0.bdstatic.com http://static.tieba.baidu.com';
+				$policy .= ' \'unsafe-inline\' \'unsafe-eval\' https://api.map.baidu.com https://gss0.bdstatic.com http://static.tieba.baidu.com';
 			}
 			$policy .= ';';
 		}
@@ -340,14 +340,14 @@ class EmptyContentSecurityPolicy {
 				$policy .= implode(' ', $this->allowedStyleDomains);
 			}
 			if($this->inlineStyleAllowed) {
-				$policy .= ' \'unsafe-inline\'';
+				$policy .= ' \'unsafe-inline\' https://api.map.baidu.com ';
 			}
 			$policy .= ';';
 		}
 
 		if(!empty($this->allowedImageDomains)) {
 			$policy .= 'img-src ' . implode(' ', $this->allowedImageDomains);
-			$policy .= ' https://api.map.baidu.com http://static.tieba.baidu.com https://gss0.bdstatic.com  ;';
+			$policy .= ' https://api.map.baidu.com http://static.tieba.baidu.com https://gss0.bdstatic.com https://www.baidu.com;';
 		}
 
 		if(!empty($this->allowedFontDomains)) {

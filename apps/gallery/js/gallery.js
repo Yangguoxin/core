@@ -756,6 +756,7 @@
                 Gallery.gallery_load_frame();
                 Gallery.gallery_load_peoplephotos();
                 Gallery.gallery_load_Allphotos();
+                Gallery.gallery_place_map();
                 Gallery.faceflag = false;
                 Gallery.image_result = 0;
         },
@@ -1013,9 +1014,9 @@
         
         gallery_place_map:function(){
             var map = new BMap.Map("place_photos_child");
-            map.centerAndZoom(new BMap.Point(116.404, 39.915), 11);
+            map.centerAndZoom(new BMap.Point(121.222834, 31.036671), 13);
             map.addControl(new BMap.MapTypeControl());
-            map.setCurrentCity("北京");
+            map.setCurrentCity("上海");
             map.enableScrollWheelZoom(true);
 
 
