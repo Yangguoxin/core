@@ -1014,12 +1014,13 @@
         
         gallery_place_map:function(){
             var map = new BMap.Map("place_photos_child");
-            map.centerAndZoom(new BMap.Point(121.222834, 31.036671), 13);
+            var point = new BMap.Point(121.166074, 31.029657)
+            map.centerAndZoom(point, 15);
             map.addControl(new BMap.MapTypeControl());
             map.setCurrentCity("上海");
             map.enableScrollWheelZoom(true);
-
-
+            var marker = new BMap.Marker(point);
+            map.addOverlay(marker);
         },           
 		/**
 		 * Switches to the Files view
